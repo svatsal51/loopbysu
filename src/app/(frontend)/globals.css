@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-paper text-ink antialiased;
+  }
+
+  /* Paper grain: fixed, non-interactive, never attached to scrolling content. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+  }
+
+  ::selection {
+    @apply bg-ink text-paper;
+  }
+
+  a {
+    @apply transition-colors duration-500 ease-spring;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-paper;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full border-2 border-solid border-paper bg-line;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-content px-4 md:px-10;
+  }
+
+  .section-pad {
+    @apply py-10 md:py-16;
+  }
+
+  /* Eyebrow pill */
+  .eyebrow {
+    @apply inline-flex items-center rounded-full bg-shell px-3 py-1 text-[10px] font-medium uppercase tracking-[0.2em] text-muted ring-1 ring-ink/5;
+  }
+
+  /* Double-bezel: outer shell + inner core (use .bezel-core inside). */
+  .bezel {
+    @apply rounded-[2rem] bg-ink/[0.035] p-1.5 ring-1 ring-ink/5;
+  }
+  .bezel-core {
+    @apply overflow-hidden rounded-[calc(2rem-0.375rem)] bg-paper shadow-inner1;
+  }
+
+  /* Pill button with a nested trailing icon circle (use .btn-icon inside). */
+  .btn-primary {
+    @apply inline-flex items-center gap-4 rounded-full bg-ink py-2 pl-7 pr-2 text-xs uppercase tracking-[0.16em] text-paper shadow-float transition-all duration-700 ease-spring hover:bg-soft active:scale-[0.98];
+  }
+  .btn-icon {
+    @apply flex h-9 w-9 items-center justify-center rounded-full bg-paper/10 transition-transform duration-700 ease-spring;
+  }
+  .btn-primary:hover .btn-icon,
+  button:hover > .btn-icon {
+    transform: translate(0.25rem, -1px) scale(1.05);
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-ink underline decoration-line decoration-1 underline-offset-[6px] transition-all duration-500 ease-spring hover:decoration-ink;
+  }
+
+  /* Staggered scroll reveal: transform + opacity (+ short blur) only. */
+  .fade-up {
+    @apply translate-y-12 opacity-0 blur-sm transition-all duration-[900ms] ease-spring;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .fade-up.is-visible {
+    @apply translate-y-0 opacity-100 blur-0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up {
+      @apply translate-y-0 opacity-100 blur-0 transition-none;
+    }
+  }
+
+  .field-label {
+    @apply mb-2 block text-[10px] font-medium uppercase tracking-[0.2em] text-muted;
+  }
+
+  .field-input {
+    @apply w-full rounded-2xl bg-shell px-5 py-3.5 text-sm text-ink outline-none ring-1 ring-ink/5 transition-all duration-500 ease-spring placeholder:text-muted/70 focus:bg-paper focus:shadow-float focus:ring-2 focus:ring-ink/70;
+  }
+
+  .richtext {
+    @apply text-[15px] leading-[1.8] text-ink/90;
+  }
+  .richtext h1,
+  .richtext h2,
+  .richtext h3 {
+    @apply mt-12 mb-4 font-normal tracking-tight text-ink first:mt-0;
+  }
+  .richtext h1 { @apply text-3xl; }
+  .richtext h2 { @apply text-2xl; }
+  .richtext h3 { @apply text-xl; }
+  .richtext p { @apply mb-5; }
+  .richtext ul { @apply mb-5 list-disc pl-6; }
+  .richtext ol { @apply mb-5 list-decimal pl-6; }
+  .richtext li { @apply mb-2; }
+  .richtext a { @apply underline decoration-line underline-offset-4 hover:decoration-ink; }
+  .richtext blockquote { @apply border-l border-ink/30 pl-5 font-display italic text-muted; }
+}
