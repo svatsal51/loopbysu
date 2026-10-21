@@ -1,0 +1,43 @@
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# next.js
+.next
+out
+next-env.d.ts
+
+# build / test output
+build
+dist
+coverage
+*.tsbuildinfo
+
+# env (keep .env.example)
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# vercel
+.vercel
+
+# local media uploads (production uses Vercel Blob)
+media
+public/media
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea
+.vscode
+
+# claude code local files
+.claude
